@@ -1,12 +1,11 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/api.py", "use": "@vercel/python", "config": { "maxDuration": 30 } }
+    { "src": "api/api.py", "use": "@vercel/python", "config": { "maxDuration": 30 } },
+    { "src": "hotel-dashboard/frontend/**/*", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/api.py" },
-    { "src": "/login\\.html", "dest": "/hotel-dashboard/frontend/login.html" },
-    { "src": "/register\\.html", "dest": "/hotel-dashboard/frontend/register.html" },
     { "src": "/(.*)", "dest": "/hotel-dashboard/frontend/$1" }
   ]
 }

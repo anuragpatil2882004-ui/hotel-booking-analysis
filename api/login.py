@@ -8,6 +8,9 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+# Make app available for Vercel as the handler
+handler = app
+
 DB_URL = os.environ.get("DATABASE_URL")
 
 def get_conn():
@@ -80,5 +83,3 @@ def login():
         }), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-handler = app

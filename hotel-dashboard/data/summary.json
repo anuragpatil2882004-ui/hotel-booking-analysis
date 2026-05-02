@@ -1,0 +1,137 @@
+{
+  "total_bookings": 50000,
+  "total_canceled": 18122,
+  "cancellation_rate": 36.24,
+  "total_revenue": 592735959,
+  "avg_lead_time": 50.01,
+  "cancel_by_type": [
+    {
+      "hotel_type": "City",
+      "canceled": 10387,
+      "total": 27574,
+      "rate": 37.67
+    },
+    {
+      "hotel_type": "Resort",
+      "canceled": 7735,
+      "total": 22426,
+      "rate": 34.49
+    }
+  ],
+  "lead_cancel": [
+    {
+      "lead_bucket": "0-20",
+      "is_canceled": 31.4
+    },
+    {
+      "lead_bucket": "21-40",
+      "is_canceled": 39.53
+    },
+    {
+      "lead_bucket": "41-60",
+      "is_canceled": 43.47
+    },
+    {
+      "lead_bucket": "61-80",
+      "is_canceled": 35.42
+    },
+    {
+      "lead_bucket": "81-100",
+      "is_canceled": 31.16
+    }
+  ],
+  "revenue_by_type": [
+    {
+      "hotel_type": "City",
+      "total_cost": 311933331
+    },
+    {
+      "hotel_type": "Resort",
+      "total_cost": 280802628
+    }
+  ],
+  "stay_cancel": [
+    {
+      "stay_duration": 1,
+      "is_canceled": 37.64
+    },
+    {
+      "stay_duration": 2,
+      "is_canceled": 38.91
+    },
+    {
+      "stay_duration": 3,
+      "is_canceled": 39.48
+    },
+    {
+      "stay_duration": 4,
+      "is_canceled": 38.8
+    },
+    {
+      "stay_duration": 5,
+      "is_canceled": 33.2
+    },
+    {
+      "stay_duration": 6,
+      "is_canceled": 31.85
+    },
+    {
+      "stay_duration": 7,
+      "is_canceled": 42.56
+    },
+    {
+      "stay_duration": 8,
+      "is_canceled": 31.77
+    },
+    {
+      "stay_duration": 9,
+      "is_canceled": 32.07
+    }
+  ],
+  "cancel_by_star": [
+    {
+      "star_rating": "normal",
+      "rate": 31.62
+    },
+    {
+      "star_rating": "3",
+      "rate": 34.34
+    },
+    {
+      "star_rating": "4",
+      "rate": 38.41
+    },
+    {
+      "star_rating": "5",
+      "rate": 44.82
+    }
+  ],
+  "cancel_by_demand": [
+    {
+      "demand": "Very High",
+      "rate": 37.42
+    },
+    {
+      "demand": "High",
+      "rate": 35.66
+    },
+    {
+      "demand": "Medium",
+      "rate": 35.48
+    },
+    {
+      "demand": "Low",
+      "rate": 36.28
+    }
+  ],
+  "cancel_by_ac": [
+    {
+      "ac_type": "ac",
+      "rate": 37.32
+    },
+    {
+      "ac_type": "nonac",
+      "rate": 34.27
+    }
+  ]
+}

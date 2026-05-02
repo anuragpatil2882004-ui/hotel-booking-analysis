@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register — Hotel Dashboard</title>
+  <link rel="stylesheet" href="style.css?v=5"/>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card wide">
+      <div class="auth-logo">⬡</div>
+      <h1 class="auth-title">Register Your Hotel</h1>
+      <p class="auth-sub">Create an account to access the analytics dashboard</p>
+
+      <div id="regError" class="auth-error hidden"></div>
+      <div id="regSuccess" class="auth-success hidden">
+        Registration successful! <a href="login.html">Sign in now</a>
+      </div>
+
+      <div class="auth-form">
+        <div class="reg-section-label">Hotel Information</div>
+        <div class="reg-grid">
+          <div class="input-group">
+            <label for="hotelName">Hotel Name</label>
+            <input type="text" id="hotelName" placeholder="e.g. The Grand Palace"/>
+          </div>
+          <div class="input-group">
+            <label for="hotelType">Hotel Type</label>
+            <select id="hotelType">
+              <option value="City">City Hotel</option>
+              <option value="Resort">Resort</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="starRating">Star Rating</label>
+            <select id="starRating">
+              <option value="normal">Unrated / Budget</option>
+              <option value="3">3 Star</option>
+              <option value="4">4 Star</option>
+              <option value="5">5 Star</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="acType">Room Type</label>
+            <select id="acType">
+              <option value="ac">AC Rooms</option>
+              <option value="nonac">Non-AC Rooms</option>
+              <option value="both">Both AC & Non-AC</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="hotelLocation">City / Location</label>
+            <input type="text" id="hotelLocation" placeholder="e.g. Mumbai"/>
+          </div>
+          <div class="input-group">
+            <label for="totalRooms">Total Rooms</label>
+            <input type="number" id="totalRooms" placeholder="e.g. 120" min="1"/>
+          </div>
+        </div>
+
+        <div class="reg-section-label" style="margin-top:28px">Account Details</div>
+        <div class="reg-grid">
+          <div class="input-group">
+            <label for="ownerName">Owner / Manager Name</label>
+            <input type="text" id="ownerName" placeholder="Full name"/>
+          </div>
+          <div class="input-group">
+            <label for="regEmail">Email Address</label>
+            <input type="email" id="regEmail" placeholder="you@hotel.com"/>
+          </div>
+          <div class="input-group">
+            <label for="regPhone">Phone Number</label>
+            <input type="tel" id="regPhone" placeholder="+91 98765 43210"/>
+          </div>
+          <div class="input-group">
+            <label for="regPassword">Password</label>
+            <input type="password" id="regPassword" placeholder="Min 6 characters"/>
+          </div>
+        </div>
+
+        <button class="auth-btn" id="registerBtn" style="margin-top:28px">Create Account</button>
+      </div>
+
+      <p class="auth-footer">Already registered? <a href="login.html">Sign in</a></p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("registerBtn").addEventListener("click", async () => {
+      const err     = document.getElementById("regError");
+      const success = document.getElementById("regSuccess");
+      const btn     = document.getElementById("registerBtn");
+      err.classList.add("hidden");
+      success.classList.add("hidden");
+
+      const payload = {
+        hotelName:     document.getElementById("hotelName").value.trim(),
+        hotelType:     document.getElementById("hotelType").value,
+        starRating:    document.getElementById("starRating").value,
+        acType:        document.getElementById("acType").value,
+        hotelLocation: document.getElementById("hotelLocation").value.trim(),
+        totalRooms:    document.getElementById("totalRooms").value || null,
+        ownerName:     document.getElementById("ownerName").value.trim(),
+        email:         document.getElementById("regEmail").value.trim(),
+        phone:         document.getElementById("regPhone").value.trim(),
+        password:      document.getElementById("regPassword").value,
+      };
+
+      if (!payload.hotelName || !payload.hotelLocation || !payload.ownerName || !payload.email || !payload.password) {
+        err.textContent = "Please fill in all required fields.";
+        err.classList.remove("hidden");
+        return;
+      }
+      if (payload.password.length < 6) {
+        err.textContent = "Password must be at least 6 characters.";
+        err.classList.remove("hidden");
+        return;
+      }
+
+      btn.textContent = "Creating account...";
+      btn.disabled = true;
+
+      try {
+        const res  = await fetch("http://localhost:5000/api/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          success.classList.remove("hidden");
+          ["hotelName","hotelLocation","totalRooms","ownerName","regEmail","regPhone","regPassword"]
+            .forEach(id => document.getElementById(id).value = "");
+        } else {
+          err.textContent = data.error || "Registration failed.";
+          err.classList.remove("hidden");
+        }
+      } catch (e) {
+        err.textContent = "Cannot reach server. Make sure the backend is running.";
+        err.classList.remove("hidden");
+      }
+
+      btn.textContent = "Create Account";
+      btn.disabled = false;
+    });
+  </script>
+</body>
+</html>

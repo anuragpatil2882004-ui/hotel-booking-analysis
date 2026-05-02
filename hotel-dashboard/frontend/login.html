@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — Hotel Dashboard</title>
+  <link rel="stylesheet" href="style.css?v=5"/>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-logo">⬡</div>
+      <h1 class="auth-title">Welcome Back</h1>
+      <p class="auth-sub">Sign in to your hotel dashboard</p>
+
+      <div id="loginError" class="auth-error hidden"></div>
+
+      <div class="auth-form">
+        <div class="input-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" placeholder="you@hotel.com"/>
+        </div>
+        <div class="input-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••"/>
+        </div>
+        <button class="auth-btn" id="loginBtn">Sign In</button>
+      </div>
+
+      <p class="auth-footer">
+        Don't have an account? <a href="register.html">Register your hotel</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    if (localStorage.getItem("hd_user")) window.location.href = "index.html";
+
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      const email    = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value;
+      const err      = document.getElementById("loginError");
+      const btn      = document.getElementById("loginBtn");
+      err.classList.add("hidden");
+
+      if (!email || !password) {
+        err.textContent = "Please enter email and password.";
+        err.classList.remove("hidden");
+        return;
+      }
+
+      btn.textContent = "Signing in...";
+      btn.disabled = true;
+
+      try {
+        const res  = await fetch("http://localhost:5000/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          localStorage.setItem("hd_user", JSON.stringify(data));
+          window.location.href = "index.html";
+        } else {
+          err.textContent = data.error || "Login failed.";
+          err.classList.remove("hidden");
+        }
+      } catch (e) {
+        err.textContent = "Cannot reach server. Make sure the backend is running.";
+        err.classList.remove("hidden");
+      }
+
+      btn.textContent = "Sign In";
+      btn.disabled = false;
+    });
+  </script>
+</body>
+</html>

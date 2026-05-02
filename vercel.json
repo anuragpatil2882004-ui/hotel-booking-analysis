@@ -5,6 +5,8 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/api.py" },
+    { "src": "/login\\.html", "dest": "/hotel-dashboard/frontend/login.html" },
+    { "src": "/register\\.html", "dest": "/hotel-dashboard/frontend/register.html" },
     { "src": "/(.*)", "dest": "/hotel-dashboard/frontend/$1" }
   ]
 }

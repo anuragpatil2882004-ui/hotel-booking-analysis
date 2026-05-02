@@ -85,5 +85,9 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/api/", methods=["GET"])
+def api_health():
+    return jsonify({"status": "api ok"})
+
 # Vercel Python runtime expects 'handler' as the WSGI application
 handler = app

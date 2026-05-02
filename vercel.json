@@ -1,7 +1,8 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/*.py", "use": "@vercel/python" }
+    { "src": "api/register.py", "use": "@vercel/python" },
+    { "src": "api/login.py", "use": "@vercel/python" }
   ],
   "routes": [
     { "src": "/api/register", "dest": "/api/register.py" },

@@ -1,0 +1,60 @@
+/**
+ * KodNest Premium Build System — Error & Empty States
+ * Errors: explain what went wrong + how to fix, never blame user
+ * Empty states: provide next action, never feel dead
+ */
+
+/* ─── Error State ─── */
+.kn-error {
+  padding: var(--kn-space-md);
+  background-color: rgba(139, 0, 0, 0.06);
+  border: var(--kn-border-width) solid rgba(139, 0, 0, 0.2);
+  border-radius: var(--kn-radius);
+}
+
+.kn-error-title {
+  font-family: var(--kn-font-sans);
+  font-size: var(--kn-body-size);
+  font-weight: 600;
+  color: var(--kn-accent);
+  margin-bottom: var(--kn-space-xs);
+}
+
+.kn-error-message {
+  font-size: var(--kn-body-small);
+  color: var(--kn-text-secondary);
+  margin-bottom: var(--kn-space-sm);
+}
+
+.kn-error-action {
+  font-size: var(--kn-body-small);
+  color: var(--kn-text-primary);
+  font-weight: 500;
+}
+
+/* ─── Empty State ─── */
+.kn-empty {
+  padding: var(--kn-space-xl);
+  text-align: center;
+  border: var(--kn-border-width) dashed var(--kn-border);
+  border-radius: var(--kn-radius);
+  background-color: white;
+}
+
+.kn-empty-title {
+  font-family: var(--kn-font-serif);
+  font-size: var(--kn-heading-sm);
+  color: var(--kn-text-primary);
+  margin-bottom: var(--kn-space-xs);
+}
+
+.kn-empty-description {
+  font-size: var(--kn-body-size);
+  color: var(--kn-text-secondary);
+  max-width: var(--kn-max-text);
+  margin: 0 auto var(--kn-space-md);
+}
+
+.kn-empty-action {
+  margin-top: var(--kn-space-md);
+}

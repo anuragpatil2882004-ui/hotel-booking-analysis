@@ -1,0 +1,67 @@
+/**
+ * KodNest Premium Build System — Design Tokens
+ * Calm, Intentional, Coherent, Confident
+ */
+
+:root {
+  /* ─── Color System (max 4 colors) ─── */
+  --kn-background: #F7F6F3;
+  --kn-text-primary: #111111;
+  --kn-accent: #8B0000;
+  --kn-success: #5A6B5A;
+  --kn-warning: #9A7B4F;
+
+  /* Semantic color variants */
+  --kn-text-secondary: #444444;
+  --kn-border: #DDDDDB;
+  --kn-border-focus: #8B0000;
+
+  /* Button states */
+  --kn-accent-hover: #6D0000;
+  --kn-accent-active: #5A0000;
+
+  /* ─── Typography ─── */
+  --kn-font-serif: "Cormorant Garamond", "Georgia", "Times New Roman", serif;
+  --kn-font-sans: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+
+  /* Heading scale (serif) */
+  --kn-heading-xl: 2.5rem;
+  --kn-heading-lg: 2rem;
+  --kn-heading-md: 1.5rem;
+  --kn-heading-sm: 1.25rem;
+
+  /* Body (sans-serif) */
+  --kn-body-size: 1rem;
+  --kn-body-large: 1.125rem;
+  --kn-body-small: 0.875rem;
+  --kn-line-height: 1.6;
+  --kn-line-height-loose: 1.8;
+
+  /* Letter spacing */
+  --kn-tracking-tight: -0.02em;
+  --kn-tracking-normal: 0;
+
+  /* ─── Spacing Scale (strict: 8, 16, 24, 40, 64) ─── */
+  --kn-space-xs: 8px;
+  --kn-space-sm: 16px;
+  --kn-space-md: 24px;
+  --kn-space-lg: 40px;
+  --kn-space-xl: 64px;
+
+  /* ─── Layout ─── */
+  --kn-max-text: 720px;
+  --kn-primary-width: 70%;
+  --kn-secondary-width: 30%;
+  --kn-topbar-height: 56px;
+  --kn-footer-height: 80px;
+
+  /* ─── Components ─── */
+  --kn-radius: 6px;
+  --kn-border-width: 1px;
+  --kn-transition: 150ms ease-in-out;
+  --kn-transition-slow: 200ms ease-in-out;
+
+  /* Inputs */
+  --kn-input-height: 44px;
+  --kn-input-padding: 0 var(--kn-space-sm);
+}

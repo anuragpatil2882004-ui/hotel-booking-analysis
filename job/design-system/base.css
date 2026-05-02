@@ -1,0 +1,77 @@
+/**
+ * KodNest Premium Build System — Base Styles
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--kn-background);
+  color: var(--kn-text-primary);
+  font-family: var(--kn-font-sans);
+  font-size: var(--kn-body-size);
+  line-height: var(--kn-line-height);
+}
+
+/* Headings — Serif, confident, generous spacing */
+h1, h2, h3, h4, .kn-heading {
+  font-family: var(--kn-font-serif);
+  font-weight: 600;
+  letter-spacing: var(--kn-tracking-tight);
+  margin: 0 0 var(--kn-space-sm);
+  color: var(--kn-text-primary);
+}
+
+h1, .kn-heading-xl {
+  font-size: var(--kn-heading-xl);
+  line-height: 1.2;
+  margin-bottom: var(--kn-space-sm);
+}
+
+h2, .kn-heading-lg {
+  font-size: var(--kn-heading-lg);
+}
+
+h3, .kn-heading-md {
+  font-size: var(--kn-heading-md);
+}
+
+h4, .kn-heading-sm {
+  font-size: var(--kn-heading-sm);
+}
+
+/* Body text — Clean sans-serif, constrained width */
+p, .kn-body {
+  margin: 0 0 var(--kn-space-sm);
+  font-family: var(--kn-font-sans);
+  font-size: var(--kn-body-large);
+  line-height: var(--kn-line-height-loose);
+  max-width: var(--kn-max-text);
+  color: var(--kn-text-primary);
+}
+
+.kn-body-small {
+  font-size: var(--kn-body-small);
+  color: var(--kn-text-secondary);
+}
+
+/* Subtext — 1-line, clear purpose */
+.kn-subtext {
+  font-size: var(--kn-body-size);
+  color: var(--kn-text-secondary);
+  max-width: var(--kn-max-text);
+  margin-bottom: var(--kn-space-md);
+}

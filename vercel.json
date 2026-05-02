@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/*.py", "use": "@vercel/python" }
+  ],
+  "routes": [
+    { "src": "/api/register", "dest": "/api/register.py" },
+    { "src": "/api/login", "dest": "/api/login.py" },
+    { "src": "/(.*)", "dest": "/hotel-dashboard/frontend/$1" }
+  ]
+}

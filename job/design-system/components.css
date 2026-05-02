@@ -1,0 +1,182 @@
+/**
+ * KodNest Premium Build System — Components
+ * Same hover effect and border radius everywhere
+ */
+
+/* ─── Buttons ─── */
+.kn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--kn-space-xs);
+  height: var(--kn-input-height);
+  padding: 0 var(--kn-space-md);
+  font-family: var(--kn-font-sans);
+  font-size: var(--kn-body-size);
+  font-weight: 500;
+  border-radius: var(--kn-radius);
+  border: var(--kn-border-width) solid transparent;
+  cursor: pointer;
+  transition: background-color var(--kn-transition), border-color var(--kn-transition), color var(--kn-transition);
+}
+
+.kn-btn-primary {
+  background-color: var(--kn-accent);
+  color: white;
+  border-color: var(--kn-accent);
+}
+
+.kn-btn-primary:hover {
+  background-color: var(--kn-accent-hover);
+  border-color: var(--kn-accent-hover);
+}
+
+.kn-btn-primary:active {
+  background-color: var(--kn-accent-active);
+  border-color: var(--kn-accent-active);
+}
+
+.kn-btn-secondary {
+  background-color: transparent;
+  color: var(--kn-text-primary);
+  border-color: var(--kn-border);
+}
+
+.kn-btn-secondary:hover {
+  border-color: var(--kn-text-primary);
+}
+
+.kn-btn-secondary:active {
+  background-color: rgba(17, 17, 17, 0.04);
+}
+
+/* ─── Inputs ─── */
+.kn-input {
+  width: 100%;
+  height: var(--kn-input-height);
+  padding: 0 var(--kn-space-sm);
+  font-family: var(--kn-font-sans);
+  font-size: var(--kn-body-size);
+  color: var(--kn-text-primary);
+  background-color: white;
+  border: var(--kn-border-width) solid var(--kn-border);
+  border-radius: var(--kn-radius);
+  transition: border-color var(--kn-transition), box-shadow var(--kn-transition);
+}
+
+.kn-input::placeholder {
+  color: var(--kn-text-secondary);
+  opacity: 0.7;
+}
+
+.kn-input:focus {
+  outline: none;
+  border-color: var(--kn-border-focus);
+  box-shadow: 0 0 0 1px var(--kn-border-focus);
+}
+
+.kn-input:disabled {
+  background-color: var(--kn-background);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.kn-textarea {
+  min-height: 120px;
+  padding: var(--kn-space-sm);
+  resize: vertical;
+}
+
+/* ─── Cards ─── */
+.kn-card {
+  background-color: white;
+  border: var(--kn-border-width) solid var(--kn-border);
+  border-radius: var(--kn-radius);
+  padding: var(--kn-space-md);
+  transition: border-color var(--kn-transition);
+}
+
+.kn-card:hover {
+  border-color: var(--kn-text-secondary);
+}
+
+.kn-card-lg {
+  padding: var(--kn-space-lg);
+}
+
+/* ─── Status Badge ─── */
+.kn-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--kn-space-xs) var(--kn-space-sm);
+  font-family: var(--kn-font-sans);
+  font-size: var(--kn-body-small);
+  font-weight: 500;
+  border-radius: var(--kn-radius);
+  border: var(--kn-border-width) solid transparent;
+}
+
+.kn-badge-default {
+  background-color: var(--kn-background);
+  color: var(--kn-text-secondary);
+  border-color: var(--kn-border);
+}
+
+.kn-badge-in-progress {
+  background-color: rgba(154, 123, 79, 0.12);
+  color: var(--kn-warning);
+  border-color: rgba(154, 123, 79, 0.3);
+}
+
+.kn-badge-shipped {
+  background-color: rgba(90, 107, 90, 0.12);
+  color: var(--kn-success);
+  border-color: rgba(90, 107, 90, 0.3);
+}
+
+.kn-badge-not-started {
+  background-color: var(--kn-background);
+  color: var(--kn-text-secondary);
+  border-color: var(--kn-border);
+}
+
+/* ─── Copyable Prompt Box ─── */
+.kn-prompt-box {
+  position: relative;
+  background-color: white;
+  border: var(--kn-border-width) solid var(--kn-border);
+  border-radius: var(--kn-radius);
+  padding: var(--kn-space-sm);
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: var(--kn-body-small);
+  line-height: 1.5;
+  color: var(--kn-text-primary);
+}
+
+.kn-prompt-box pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ─── Checklist / Proof Footer Items ─── */
+.kn-checklist-item {
+  display: flex;
+  align-items: center;
+  gap: var(--kn-space-sm);
+  padding: var(--kn-space-xs) 0;
+}
+
+.kn-checklist-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--kn-accent);
+  cursor: pointer;
+}
+
+.kn-checklist-item label {
+  font-family: var(--kn-font-sans);
+  font-size: var(--kn-body-size);
+  color: var(--kn-text-primary);
+  cursor: pointer;
+}

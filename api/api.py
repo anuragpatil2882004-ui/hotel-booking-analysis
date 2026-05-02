@@ -16,6 +16,10 @@ def get_conn():
 def hash_password(pw):
     return hashlib.sha256(pw.encode()).hexdigest()
 
+@app.route("/", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"})
+
 @app.route("/api/register", methods=["POST", "OPTIONS"])
 def register():
     if request.method == "OPTIONS":
@@ -80,6 +84,10 @@ def login():
         }), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route("/", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"})
 
 # Vercel Python runtime expects 'handler' as the WSGI application
 handler = app

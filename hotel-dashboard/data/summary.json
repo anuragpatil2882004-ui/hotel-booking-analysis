@@ -1,137 +1,200 @@
 {
   "total_bookings": 50000,
-  "total_canceled": 18122,
-  "cancellation_rate": 36.24,
-  "total_revenue": 592735959,
+  "total_canceled": 17881,
+  "cancellation_rate": 35.76,
+  "total_revenue": 596504359,
   "avg_lead_time": 50.01,
+  "revenue_lost_last_month": 15548504,
   "cancel_by_type": [
     {
       "hotel_type": "City",
-      "canceled": 10387,
+      "canceled": 10160,
       "total": 27574,
-      "rate": 37.67
+      "rate": 36.85
     },
     {
       "hotel_type": "Resort",
-      "canceled": 7735,
+      "canceled": 7721,
       "total": 22426,
-      "rate": 34.49
+      "rate": 34.43
     }
   ],
   "lead_cancel": [
     {
       "lead_bucket": "0-20",
-      "is_canceled": 31.4
+      "is_canceled": 30.38
     },
     {
       "lead_bucket": "21-40",
-      "is_canceled": 39.53
+      "is_canceled": 38.89
     },
     {
       "lead_bucket": "41-60",
-      "is_canceled": 43.47
+      "is_canceled": 42.87
     },
     {
       "lead_bucket": "61-80",
-      "is_canceled": 35.42
+      "is_canceled": 34.96
     },
     {
       "lead_bucket": "81-100",
-      "is_canceled": 31.16
+      "is_canceled": 31.51
     }
   ],
   "revenue_by_type": [
     {
       "hotel_type": "City",
-      "total_cost": 311933331
+      "total_cost": 315860082
     },
     {
       "hotel_type": "Resort",
-      "total_cost": 280802628
+      "total_cost": 280644277
     }
   ],
   "stay_cancel": [
     {
       "stay_duration": 1,
-      "is_canceled": 37.64
+      "is_canceled": 37.01
     },
     {
       "stay_duration": 2,
-      "is_canceled": 38.91
+      "is_canceled": 37.19
     },
     {
       "stay_duration": 3,
-      "is_canceled": 39.48
+      "is_canceled": 38.26
     },
     {
       "stay_duration": 4,
-      "is_canceled": 38.8
+      "is_canceled": 38.15
     },
     {
       "stay_duration": 5,
-      "is_canceled": 33.2
+      "is_canceled": 31.52
     },
     {
       "stay_duration": 6,
-      "is_canceled": 31.85
+      "is_canceled": 31.93
     },
     {
       "stay_duration": 7,
-      "is_canceled": 42.56
+      "is_canceled": 42.52
     },
     {
       "stay_duration": 8,
-      "is_canceled": 31.77
+      "is_canceled": 32.7
     },
     {
       "stay_duration": 9,
-      "is_canceled": 32.07
+      "is_canceled": 32.68
     }
   ],
   "cancel_by_star": [
     {
       "star_rating": "normal",
-      "rate": 31.62
+      "rate": 30.52
     },
     {
       "star_rating": "3",
-      "rate": 34.34
+      "rate": 34.32
     },
     {
       "star_rating": "4",
-      "rate": 38.41
+      "rate": 38.14
     },
     {
       "star_rating": "5",
-      "rate": 44.82
+      "rate": 43.9
     }
   ],
   "cancel_by_demand": [
     {
       "demand": "Very High",
-      "rate": 37.42
+      "rate": 37.3
     },
     {
       "demand": "High",
-      "rate": 35.66
+      "rate": 35.08
     },
     {
       "demand": "Medium",
-      "rate": 35.48
+      "rate": 35.03
     },
     {
       "demand": "Low",
-      "rate": 36.28
+      "rate": 33.33
     }
   ],
   "cancel_by_ac": [
     {
       "ac_type": "ac",
-      "rate": 37.32
+      "rate": 36.94
     },
     {
       "ac_type": "nonac",
-      "rate": 34.27
+      "rate": 33.61
+    }
+  ],
+  "seasonal_demand": [
+    {
+      "month": "Jan",
+      "bookings": 4235,
+      "cancellation_rate": 34.59
+    },
+    {
+      "month": "Feb",
+      "bookings": 3936,
+      "cancellation_rate": 35.57
+    },
+    {
+      "month": "Mar",
+      "bookings": 4105,
+      "cancellation_rate": 35.86
+    },
+    {
+      "month": "Apr",
+      "bookings": 4177,
+      "cancellation_rate": 35.65
+    },
+    {
+      "month": "May",
+      "bookings": 4345,
+      "cancellation_rate": 35.74
+    },
+    {
+      "month": "Jun",
+      "bookings": 4243,
+      "cancellation_rate": 36.32
+    },
+    {
+      "month": "Jul",
+      "bookings": 4145,
+      "cancellation_rate": 36.38
+    },
+    {
+      "month": "Aug",
+      "bookings": 4171,
+      "cancellation_rate": 34.67
+    },
+    {
+      "month": "Sep",
+      "bookings": 4178,
+      "cancellation_rate": 35.64
+    },
+    {
+      "month": "Oct",
+      "bookings": 4261,
+      "cancellation_rate": 37.03
+    },
+    {
+      "month": "Nov",
+      "bookings": 4058,
+      "cancellation_rate": 35.04
+    },
+    {
+      "month": "Dec",
+      "bookings": 4146,
+      "cancellation_rate": 36.61
     }
   ]
 }

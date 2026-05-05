@@ -70,12 +70,43 @@ cancel_by_ac = (
     .rename(columns={"is_canceled": "rate"})
 )
 
+# --- Seasonal demand: Monthly booking and cancellation trends ---
+data["booking_date"] = pd.to_datetime(data["booking_date"])
+data["month"] = data["booking_date"].dt.month
+data["month_name"] = data["booking_date"].dt.strftime("%b")
+
+monthly_stats = (
+    data.groupby(["month", "month_name"])
+    .agg(bookings=("booking_id", "count"), 
+         canceled=("is_canceled", "sum"))
+    .reset_index()
+)
+monthly_stats["cancellation_rate"] = round(
+    monthly_stats["canceled"] / monthly_stats["bookings"] * 100, 2
+)
+monthly_stats = monthly_stats.sort_values("month")
+
+seasonal_demand = []
+for _, row in monthly_stats.iterrows():
+    seasonal_demand.append({
+        "month": row["month_name"],
+        "bookings": int(row["bookings"]),
+        "cancellation_rate": row["cancellation_rate"]
+    })
+
+# --- Revenue lost last month due to cancellations ---
+# Get the most recent month with data
+latest_month = data["booking_date"].max()
+last_month_data = data[data["booking_date"].dt.to_period("M") == latest_month.to_period("M")]
+revenue_lost_last_month = int(last_month_data[last_month_data["is_canceled"] == 1]["total_cost"].sum())
+
 summary = {
     "total_bookings":   total_bookings,
     "total_canceled":   total_canceled,
     "cancellation_rate": cancellation_rate,
     "total_revenue":    total_revenue,
     "avg_lead_time":    avg_lead_time,
+    "revenue_lost_last_month": revenue_lost_last_month,
     "cancel_by_type":   cancel_by_type.to_dict(orient="records"),
     "lead_cancel":      lead_cancel.to_dict(orient="records"),
     "revenue_by_type":  revenue_by_type.to_dict(orient="records"),
@@ -83,6 +114,7 @@ summary = {
     "cancel_by_star":   cancel_by_star.to_dict(orient="records"),
     "cancel_by_demand": cancel_by_demand.to_dict(orient="records"),
     "cancel_by_ac":     cancel_by_ac.to_dict(orient="records"),
+    "seasonal_demand":  seasonal_demand,
 }
 
 os.makedirs("../data", exist_ok=True)

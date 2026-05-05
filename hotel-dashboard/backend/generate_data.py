@@ -1,9 +1,30 @@
 import pandas as pd
 import numpy as np
 import os
+from datetime import datetime, timedelta
 
 np.random.seed(42)
 n = 50000
+
+# --- Seasonal weights for each month (peak summer + winter holidays) ---
+# Pattern: high summer (May-Aug), high winter (Dec-Jan), low monsoon (Jun-Jul for resorts)
+seasonal_month_weights = {
+    1: 1.1,   # Jan - New year, winter travel
+    2: 0.9,   # Feb - low season
+    3: 1.0,   # Mar - spring break
+    4: 1.1,   # Apr - summer start
+    5: 1.2,   # May - peak summer
+    6: 1.3,   # Jun - peak summer
+    7: 1.4,   # Jul - peak summer
+    8: 1.3,   # Aug - peak summer
+    9: 1.1,   # Sep - post monsoon
+    10: 1.0,  # Oct - normal
+    11: 1.2,  # Nov - winter start
+    12: 1.4,  # Dec - peak winter holidays
+}
+
+# --- Weekly pattern (Fri-Sun higher, Mon-Tue lower) ---
+weekday_weights = {0: 0.8, 1: 0.6, 2: 0.7, 3: 1.0, 4: 1.2, 5: 1.4, 6: 1.3}
 
 # --- Location pool with demand tiers ---
 city_locations = [
@@ -24,12 +45,6 @@ resort_locations = [
 # Demand → weight for sampling (higher demand = more bookings)
 demand_weight = {"Very High": 4, "High": 3, "Medium": 2, "Low": 1}
 
-def weighted_sample(pool, size):
-    weights = np.array([demand_weight[d] for _, d in pool], dtype=float)
-    weights /= weights.sum()
-    idx = np.random.choice(len(pool), size=size, p=weights)
-    return [pool[i] for i in idx]
-
 # --- Base price matrix [Very High, High, Medium, Low] ---
 base_price = {
     ("normal", "ac"):    [1800, 1200,  800,  500],
@@ -42,6 +57,12 @@ base_price = {
     ("5",      "nonac"): [11000,8000, 5500, 4000],
 }
 demand_idx = {"Very High": 0, "High": 1, "Medium": 2, "Low": 3}
+
+def weighted_sample(pool, size):
+    weights = np.array([demand_weight[d] for _, d in pool], dtype=float)
+    weights /= weights.sum()
+    idx = np.random.choice(len(pool), size=size, p=weights)
+    return [pool[i] for i in idx]
 
 # --- Generate base columns ---
 hotel_type   = np.random.choice(["City", "Resort"], n, p=[0.55, 0.45])
@@ -58,6 +79,20 @@ for i in range(n):
     loc, dem = city_samples[i] if hotel_type[i] == "City" else resort_samples[i]
     locations.append(loc)
     demands.append(dem)
+
+# --- Generate dates with seasonal distribution ---
+dates = []
+for i in range(n):
+    # Weighted month selection
+    months = list(seasonal_month_weights.keys())
+    probs = np.array([seasonal_month_weights[m] for m in months])
+    probs = probs / probs.sum()
+    month = np.random.choice(months, p=probs)
+    
+    # Add random days (0-730) spread over 2 years for variety
+    offset_days = np.random.randint(0, 730)
+    booking_date = datetime(2024, 1, 1) + timedelta(days=offset_days)
+    dates.append(booking_date.strftime("%Y-%m-%d"))
 
 # --- Realistic price with ±30% noise around market rate ---
 prices = []
@@ -113,6 +148,7 @@ is_canceled = np.array([np.random.choice([0, 1], p=[1 - cp, cp]) for cp in cance
 
 data = pd.DataFrame({
     "booking_id":    range(1, n + 1),
+    "booking_date":  dates,
     "hotel_type":    hotel_type,
     "location":      locations,
     "demand":        demands,
@@ -127,6 +163,6 @@ data = pd.DataFrame({
 
 os.makedirs("../data", exist_ok=True)
 data.to_csv("../data/bookings.csv", index=False)
-print(f"Generated {n} records → ../data/bookings.csv")
+print(f"Generated {n} records -> ../data/bookings.csv")
 print(data.head())
 print(f"\nCancellation rate: {data['is_canceled'].mean()*100:.1f}%")

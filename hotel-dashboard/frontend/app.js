@@ -14,15 +14,22 @@
     "High":[31.53,34.16,38.36,41.09,42.41,44.87],
     "Medium":[30.73,35.78,43.6,42.35,49.09,62.14],
     "Low":[32.77,41.19,40.51,59.38,null,null]
+  },
+  seasonal_demand:{
+    labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+    bookings:[4235,3936,4105,4177,4345,4243,4145,4171,4178,4261,4058,4146],
+    revenue:[3.4,3.1,3.3,3.3,3.5,3.4,3.3,3.3,3.3,3.5,3.2,3.4],
+    cancellation:[34.59,35.57,35.86,35.65,35.74,36.32,36.38,34.67,35.64,37.03,35.04,36.61]
   }
 };
 
 window.onload = function () {
   document.getElementById("totalBookings").textContent = "50,000";
-  document.getElementById("totalCanceled").textContent = "18,122";
-  document.getElementById("cancelRate").textContent    = "36.24%";
-  document.getElementById("totalRevenue").textContent  = "Rs.592.74M";
+  document.getElementById("totalCanceled").textContent = "17,881";
+  document.getElementById("cancelRate").textContent    = "35.76%";
+  document.getElementById("totalRevenue").textContent  = "Rs.596.5M";
   document.getElementById("avgLead").textContent       = "50.01 days";
+  document.getElementById("revenueLost").textContent     = "Rs.15.5M";
 
   var g = { color:"rgba(240,236,228,0.9)", grid:{color:"rgba(255,255,255,0.05)"}, ticks:{color:"rgba(160,152,128,0.9)",font:{size:11}} };
 
@@ -79,6 +86,25 @@ window.onload = function () {
     },
     options:co("Cancellation Rate (%)",g)
   });
+
+  // Chart 5 — Seasonal Demand
+  new Chart(document.getElementById("seasonalDemandChart"),{
+    type:"bar",
+    data:{
+      labels:summaryData.seasonal_demand.labels,
+      datasets:[
+        {label:"Bookings",data:summaryData.seasonal_demand.bookings,backgroundColor:"rgba(212,168,67,0.75)",borderRadius:4},
+        {type:"line",label:"Cancellation Rate (%)",data:summaryData.seasonal_demand.cancellation,borderColor:"rgba(248,113,113,0.9)",backgroundColor:"rgba(248,113,113,0.08)",fill:false,tension:0.4,pointRadius:4,pointBackgroundColor:"rgba(248,113,113,1)"}
+      ]
+    },
+    options:{
+      plugins:{legend:{labels:{color:g.color}}},
+      scales:{
+        x:{grid:g.grid,ticks:g.ticks},
+        y:{grid:g.grid,ticks:{...g.ticks,callback:function(v){return v/1000+"K"}},title:{display:true,text:"Bookings",color:g.color}}
+      }
+    }
+  });
 };
 
 function co(y,g){return{plugins:{legend:{labels:{color:g.color}}},scales:{x:{grid:g.grid,ticks:g.ticks},y:{grid:g.grid,ticks:g.ticks,title:{display:true,text:y,color:g.color}}}};}
@@ -101,18 +127,19 @@ function calcRisk(ht,lt,sd,pp,sr,at,li){
 }
 
 document.addEventListener("DOMContentLoaded",function(){
-  document.getElementById("addBookingBtn").addEventListener("click",function(){
-    var lt=parseInt(document.getElementById("leadTime").value);
-    var sd=parseInt(document.getElementById("stayDuration").value);
-    var pp=parseInt(document.getElementById("pricePerNight").value);
-    var box=document.getElementById("predictionResult");
-    if(!lt||!sd||!pp){box.className="prediction-box medium";box.innerHTML="Please fill in all fields.";return;}
-    var u=JSON.parse(localStorage.getItem("hd_user")||"{}");
-    var ht=u.hotelType||"City";
-    var rl=u.hotelLocation||"";
-    var sr=u.starRating||"normal";
-    var at=(u.acType==="both")?"ac":(u.acType||"ac");
-    var li=null,arr=locations[ht];
+   document.getElementById("addBookingBtn").addEventListener("click",function(){
+     var lt=parseInt(document.getElementById("leadTime").value);
+     var sd=parseInt(document.getElementById("stayDuration").value);
+     var pp=parseInt(document.getElementById("pricePerNight").value);
+     var rt=document.getElementById("roomType").value;
+     var box=document.getElementById("predictionResult");
+     if(!lt||!sd||!pp){box.className="prediction-box medium";box.innerHTML="Please fill in all fields.";return;}
+     var u=JSON.parse(localStorage.getItem("hd_user")||"{}");
+     var ht=u.hotelType||"City";
+     var rl=u.hotelLocation||"";
+     var sr=u.starRating||"normal";
+     var at=rt;
+     var li=null,arr=locations[ht];
     for(var i=0;i<arr.length;i++){if(arr[i].name===rl){li=arr[i];break;}}
     if(!li){for(var i=0;i<arr.length;i++){if(arr[i].demand==="Medium"){li=arr[i];break;}}}
     if(!li)li={name:rl||ht,demand:"Medium",pop:"--"};

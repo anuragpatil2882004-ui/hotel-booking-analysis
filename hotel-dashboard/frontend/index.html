@@ -78,6 +78,13 @@
           <label for="pricePerNight">Price per Night (₹)</label>
           <input type="number" id="pricePerNight" min="500" placeholder="e.g. 5000" />
         </div>
+        <div class="input-group">
+          <label for="roomType">Room Type</label>
+          <select id="roomType">
+            <option value="ac">AC Rooms</option>
+            <option value="nonac">Non-AC Rooms</option>
+          </select>
+        </div>
         <div class="input-group btn-group">
           <button id="addBookingBtn">Analyze Booking</button>
         </div>
@@ -107,6 +114,10 @@
         <span class="kpi-label">Avg Lead Time</span>
         <span class="kpi-value" id="avgLead">—</span>
       </div>
+      <div class="card kpi">
+        <span class="kpi-label">Revenue Lost (Last Month)</span>
+        <span class="kpi-value" id="revenueLost">—</span>
+      </div>
     </div>
 
     <!-- Charts -->
@@ -130,9 +141,15 @@
         <canvas id="leadCancelChart"></canvas>
       </div>
     </div>
+    <div class="chart-grid">
+      <div class="card chart-card">
+        <h3>Seasonal Demand & Cancellation Trends</h3>
+        <canvas id="seasonalDemandChart"></canvas>
+      </div>
+    </div>
   </div>
 
-  <script src="app.js?v=9"></script>
+  <script src="app.js?v=12"></script>
   <script>
     const user = JSON.parse(localStorage.getItem("hd_user") || "null");
     if (user) {

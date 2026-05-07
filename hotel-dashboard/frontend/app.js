@@ -146,7 +146,7 @@ function pickLocation(arr,rawLocation,hotelType){
   }
   var threshold=Math.max(2,Math.floor(q.length*0.35));
   if(best&&bestScore<=threshold){return best;}
-  for(var i=0;i<arr.length;i++){if(arr[i].demand==="Medium"){return arr[i];}}
+  // Keep user's original location if we cannot confidently map it.
   return {name:rawLocation,demand:"Medium",pop:"--"};
 }
 

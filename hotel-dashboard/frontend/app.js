@@ -1,4 +1,4 @@
-﻿var summaryData = {
+var summaryData = {
   cancel_by_price:[{p:"Under 2K",v:31.47},{p:"2K-4K",v:35.21},{p:"4K-6K",v:39.46},{p:"6K-8K",v:41.15},{p:"8K-10K",v:43.88},{p:"Above 10K",v:46.71}],
   lead_cancel:[{b:"0-20",v:31.4},{b:"21-40",v:39.53},{b:"41-60",v:43.47},{b:"61-80",v:35.42},{b:"81-100",v:31.16}],
   price_star:{
@@ -113,6 +113,42 @@ var locations={City:[{name:"Mumbai",demand:"Very High",pop:"20.7M"},{name:"Delhi
 var bpm={normal:{ac:[1800,1200,800,500],nonac:[1200,800,500,350]},"3":{ac:[3500,2800,2000,1400],nonac:[2500,2000,1400,900]},"4":{ac:[7000,5500,4000,2800],nonac:[5000,4000,2800,2000]},"5":{ac:[15000,11000,8000,5500],nonac:[11000,8000,5500,4000]}};
 var di={"Very High":0,"High":1,"Medium":2,"Low":3};
 function gmp(star,ac,demand){return bpm[star][ac][di[demand]!=null?di[demand]:2];}
+function normText(v){return (v||"").toLowerCase().replace(/[^a-z0-9]/g,"");}
+function levDist(a,b){
+  var m=a.length,n=b.length;
+  var dp=new Array(m+1);
+  for(var i=0;i<=m;i++){dp[i]=new Array(n+1);}
+  for(var i=0;i<=m;i++)dp[i][0]=i;
+  for(var j=0;j<=n;j++)dp[0][j]=j;
+  for(var i=1;i<=m;i++){
+    for(var j=1;j<=n;j++){
+      var c=a[i-1]===b[j-1]?0:1;
+      dp[i][j]=Math.min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+c);
+    }
+  }
+  return dp[m][n];
+}
+function pickLocation(arr,rawLocation,hotelType){
+  var q=normText(rawLocation);
+  if(!q){
+    for(var i=0;i<arr.length;i++){if(arr[i].demand==="Medium"){return arr[i];}}
+    return {name:hotelType,demand:"Medium",pop:"--"};
+  }
+  for(var i=0;i<arr.length;i++){
+    if(normText(arr[i].name)===q){return arr[i];}
+  }
+  var best=null,bestScore=1e9;
+  for(var i=0;i<arr.length;i++){
+    var n=normText(arr[i].name);
+    var d=levDist(q,n);
+    if(n.indexOf(q)>=0||q.indexOf(n)>=0){d=Math.min(d,1);}
+    if(d<bestScore){best=arr[i];bestScore=d;}
+  }
+  var threshold=Math.max(2,Math.floor(q.length*0.35));
+  if(best&&bestScore<=threshold){return best;}
+  for(var i=0;i<arr.length;i++){if(arr[i].demand==="Medium"){return arr[i];}}
+  return {name:rawLocation,demand:"Medium",pop:"--"};
+}
 
 function calcRisk(ht,lt,sd,pp,sr,at,li){
   var s=0;
@@ -139,10 +175,8 @@ document.addEventListener("DOMContentLoaded",function(){
      var rl=u.hotelLocation||"";
      var sr=u.starRating||"normal";
      var at=rt;
-     var li=null,arr=locations[ht];
-    for(var i=0;i<arr.length;i++){if(arr[i].name===rl){li=arr[i];break;}}
-    if(!li){for(var i=0;i<arr.length;i++){if(arr[i].demand==="Medium"){li=arr[i];break;}}}
-    if(!li)li={name:rl||ht,demand:"Medium",pop:"--"};
+    var arr=locations[ht]||[];
+    var li=pickLocation(arr,rl,ht);
     var tc=pp*sd,r=calcRisk(ht,lt,sd,pp,sr,at,li);
     var sl={normal:"Normal","3":"3 Star","4":"4 Star","5":"5 Star"}[sr];
     var al=at==="ac"?"AC":"Non-AC";

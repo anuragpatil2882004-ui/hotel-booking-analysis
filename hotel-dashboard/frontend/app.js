@@ -168,11 +168,12 @@ document.addEventListener("DOMContentLoaded",function(){
      var sd=parseInt(document.getElementById("stayDuration").value);
      var pp=parseInt(document.getElementById("pricePerNight").value);
      var rt=document.getElementById("roomType").value;
+     var analysisLocation=(document.getElementById("analysisLocation").value||"").trim();
      var box=document.getElementById("predictionResult");
      if(!lt||!sd||!pp){box.className="prediction-box medium";box.innerHTML="Please fill in all fields.";return;}
      var u=JSON.parse(localStorage.getItem("hd_user")||"{}");
      var ht=u.hotelType||"City";
-     var rl=u.hotelLocation||"";
+     var rl=analysisLocation||u.hotelLocation||"";
      var sr=u.starRating||"normal";
      var at=rt;
     var arr=locations[ht]||[];
